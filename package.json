@@ -1,0 +1,15 @@
+{
+  "name": "memento",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@10.26.2",
+  "scripts": {
+    "build": "pnpm --recursive build",
+    "dev": "pnpm --filter @memento/web dev",
+    "test": "pnpm --recursive test",
+    "typecheck": "pnpm --recursive typecheck"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}
