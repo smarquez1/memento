@@ -91,6 +91,20 @@ e2e/            browser scenarios
 
 The core package must not import React, Dexie, Todoist, or a backend framework. The web app and API depend on the core through ports and adapters. This keeps the frontend replaceable by Svelte and the backend replaceable by Rails, Phoenix, or another implementation.
 
+### Persistence approach
+
+- **MVP** uses IndexedDB through Dexie as the browser-side store. Dexie is a lightweight typed wrapper over IndexedDB, the standard client-side document store. It provides async queries, schema versioning, and database reset for tests.
+- **Not localStorage**: synchronous, capped at 5 MB, no structured data support, and doesn't scale to completed-task history or sync metadata.
+- **Not SQLite in the browser**: requires WASM (sql.js ~1.5 MB), is synchronous in the common build, and adds complexity without benefit for the MVP data model.
+- The medium-term plan is an HTTP API backed by SQLite or PostgreSQL. When that happens, the web PWA creates a new adapter (`fetch`-based) behind the same port. The core domain and UI never see the difference.
+- **No ORM abstracts IndexedDB and SQLite** because they are fundamentally different paradigms (document store vs relational). The seam is the port interface, not an ORM.
+
+```text
+TaskRepository (interface, in apps/web/src/ports)
+├── DexieTaskAdapter     → IndexedDB via Dexie (MVP)
+└── HttpTaskAdapter      → REST API (Phase 3+)
+```
+
 ## UI direction
 
 - Minimal dark interface inspired by Todoist's mobile information hierarchy.
