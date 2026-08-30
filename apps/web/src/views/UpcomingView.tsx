@@ -1,0 +1,26 @@
+import type { Task } from "@memento/core"
+import { TaskRow } from "../components/TaskRow.js"
+
+export function UpcomingView({ tasks }: { tasks: Task[] }) {
+  const today = new Date().toISOString().slice(0, 10)
+  const upcoming = tasks
+    .filter((task) => task.dueDate !== null && task.dueDate > today)
+    .sort((a, b) => (a.dueDate ?? "").localeCompare(b.dueDate ?? ""))
+  return (
+    <section>
+      <h1 className="mb-1 text-3xl font-bold tracking-tight">Upcoming</h1>
+      <p className="mb-6 text-sm text-[#85858c]">
+        {upcoming.length} {upcoming.length === 1 ? "task" : "tasks"} ahead
+      </p>
+      {upcoming.length === 0 ? (
+        <p className="text-sm text-[#85858c]">Nothing scheduled ahead.</p>
+      ) : (
+        <ul className="list-none p-0">
+          {upcoming.map((task) => (
+            <TaskRow key={task.id} task={task} />
+          ))}
+        </ul>
+      )}
+    </section>
+  )
+}
