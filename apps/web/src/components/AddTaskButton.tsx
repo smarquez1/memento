@@ -1,6 +1,6 @@
 interface AddTaskButtonProps {
-  ref?: React.Ref<HTMLButtonElement>
-  onClick: () => void
+  ref?: React.Ref<HTMLButtonElement>;
+  onClick: () => void;
 }
 
 export function AddTaskButton({ ref, onClick }: AddTaskButtonProps) {
@@ -14,5 +14,5 @@ export function AddTaskButton({ ref, onClick }: AddTaskButtonProps) {
     >
       <span aria-hidden="true">+</span>
     </button>
-  )
+  );
 }

@@ -1,4 +1,4 @@
-import type { Task } from "@memento/core"
+import type { Task } from "@memento/core";
 
 export function TaskRow({ task }: { task: Task }) {
   return (
@@ -14,7 +14,9 @@ export function TaskRow({ task }: { task: Task }) {
         {task.status === "completed" ? "✓" : ""}
       </span>
       <div className="min-w-0 flex-1">
-        <p className={`truncate text-sm ${task.status === "completed" ? "text-[#85858c] line-through" : "text-[#f4f1eb]"}`}>
+        <p
+          className={`truncate text-sm ${task.status === "completed" ? "text-[#85858c] line-through" : "text-[#f4f1eb]"}`}
+        >
           {task.title}
         </p>
         {(task.dueDate || task.description) && (
@@ -24,5 +26,5 @@ export function TaskRow({ task }: { task: Task }) {
         )}
       </div>
     </li>
-  )
+  );
 }

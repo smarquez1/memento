@@ -1,10 +1,10 @@
-import type { Task } from "@memento/core"
-import { isTaskDueOn } from "@memento/core"
-import { TaskRow } from "../components/TaskRow.js"
+import type { Task } from "@memento/core";
+import { isTaskDueOn } from "@memento/core";
+import { TaskRow } from "../components/TaskRow.js";
 
 export function TodayView({ tasks }: { tasks: Task[] }) {
-  const today = new Date().toISOString().slice(0, 10)
-  const todayTasks = tasks.filter((task) => isTaskDueOn(task, today))
+  const today = new Date().toISOString().slice(0, 10);
+  const todayTasks = tasks.filter((task) => isTaskDueOn(task, today));
   return (
     <section>
       <h1 className="mb-1 text-3xl font-bold tracking-tight">Today</h1>
@@ -19,5 +19,5 @@ export function TodayView({ tasks }: { tasks: Task[] }) {
         </ul>
       )}
     </section>
-  )
+  );
 }

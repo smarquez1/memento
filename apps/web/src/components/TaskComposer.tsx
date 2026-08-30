@@ -1,81 +1,78 @@
-import { useEffect, useRef, useState } from "react"
-import { createTask, type Task, type TaskEffort, type TaskPriority } from "@memento/core"
+import { createTask, type Task, type TaskEffort, type TaskPriority } from "@memento/core";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 interface TaskComposerProps {
-  onClose: () => void
-  onSave: (task: Task) => Promise<void>
+  onClose: () => void;
+  onSave: (task: Task) => Promise<void>;
 }
 
 export function TaskComposer({ onClose, onSave }: TaskComposerProps) {
-  const [title, setTitle] = useState("")
-  const [description, setDescription] = useState("")
-  const [when, setWhen] = useState("")
-  const [priority, setPriority] = useState<TaskPriority>("none")
-  const [effort, setEffort] = useState<TaskEffort>("none")
-  const [error, setError] = useState<string | null>(null)
-  const [saving, setSaving] = useState(false)
-  const titleRef = useRef<HTMLInputElement>(null)
-  const backdropRef = useRef<HTMLDivElement>(null)
-  const openRef = useRef<HTMLButtonElement>(null)
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [when, setWhen] = useState("");
+  const [priority, setPriority] = useState<TaskPriority>("none");
+  const [effort, setEffort] = useState<TaskEffort>("none");
+  const [error, setError] = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
+  const titleRef = useRef<HTMLInputElement>(null);
+  const openRef = useRef<HTMLButtonElement>(null);
+
+  const handleClose = useCallback(() => {
+    openRef.current?.focus();
+    onClose();
+  }, [onClose]);
 
   useEffect(() => {
-    openRef.current = document.activeElement as HTMLButtonElement
-    titleRef.current?.focus()
-  }, [])
+    openRef.current = document.activeElement as HTMLButtonElement;
+    titleRef.current?.focus();
+  }, []);
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
-        handleClose()
+        handleClose();
       }
     }
-    document.addEventListener("keydown", onKeyDown)
-    return () => document.removeEventListener("keydown", onKeyDown)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [onClose])
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [handleClose]);
 
   async function handleSubmit(event: React.FormEvent) {
-    event.preventDefault()
-    setError(null)
+    event.preventDefault();
+    setError(null);
     try {
       const task = createTask(
         { title, description, dueDate: when.trim() || null, priority, effort },
         crypto.randomUUID(),
         new Date().toISOString(),
-      )
-      setSaving(true)
-      await onSave(task)
-      setTitle("")
-      setDescription("")
-      setWhen("")
-      setPriority("none")
-      setEffort("none")
-      handleClose()
+      );
+      setSaving(true);
+      await onSave(task);
+      setTitle("");
+      setDescription("");
+      setWhen("");
+      setPriority("none");
+      setEffort("none");
+      handleClose();
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : "Could not save task")
-      titleRef.current?.focus()
+      setError(cause instanceof Error ? cause.message : "Could not save task");
+      titleRef.current?.focus();
     } finally {
-      setSaving(false)
+      setSaving(false);
     }
   }
 
-  function handleClose() {
-    openRef.current?.focus()
-    onClose()
-  }
-
   const inputClass =
-    "w-full rounded-lg border border-[#303037] bg-[#19191d] px-4 py-3 text-sm text-[#f4f1eb] placeholder:text-[#85858c] focus:border-[#f4f1eb] focus:outline-none"
+    "w-full rounded-lg border border-[#303037] bg-[#19191d] px-4 py-3 text-sm text-[#f4f1eb] placeholder:text-[#85858c] focus:border-[#f4f1eb] focus:outline-none";
 
   return (
-    <div
-      ref={backdropRef}
-      role="presentation"
-      onMouseDown={(event) => {
-        if (event.target === backdropRef.current) handleClose()
-      }}
-      className="fixed inset-0 z-40 bg-black/60"
-    >
+    <div className="fixed inset-0 z-40">
+      <button
+        type="button"
+        aria-label="Close new task dialog"
+        onClick={handleClose}
+        className="absolute inset-0 h-full w-full cursor-default bg-black/60"
+      />
       <div
         role="dialog"
         aria-modal="true"
@@ -184,5 +181,5 @@ export function TaskComposer({ onClose, onSave }: TaskComposerProps) {
         </form>
       </div>
     </div>
-  )
+  );
 }

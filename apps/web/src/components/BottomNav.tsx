@@ -1,14 +1,14 @@
-import type { ViewId } from "../App.js"
+import type { ViewId } from "../App.js";
 
 const views: { id: ViewId; label: string }[] = [
   { id: "inbox", label: "Inbox" },
   { id: "today", label: "Today" },
   { id: "upcoming", label: "Upcoming" },
-]
+];
 
 interface BottomNavProps {
-  view: ViewId
-  onSelect: (view: ViewId) => void
+  view: ViewId;
+  onSelect: (view: ViewId) => void;
 }
 
 export function BottomNav({ view, onSelect }: BottomNavProps) {
@@ -19,7 +19,7 @@ export function BottomNav({ view, onSelect }: BottomNavProps) {
     >
       <div className="mx-auto flex w-full max-w-xl items-stretch justify-around pb-[env(safe-area-inset-bottom)]">
         {views.map((item) => {
-          const selected = item.id === view
+          const selected = item.id === view;
           return (
             <button
               key={item.id}
@@ -35,9 +35,9 @@ export function BottomNav({ view, onSelect }: BottomNavProps) {
               </span>
               <span className="font-medium">{item.label}</span>
             </button>
-          )
+          );
         })}
       </div>
     </nav>
-  )
+  );
 }

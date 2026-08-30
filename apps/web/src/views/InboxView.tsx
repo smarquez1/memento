@@ -1,9 +1,9 @@
-import type { Task } from "@memento/core"
-import { isTaskInInbox } from "@memento/core"
-import { TaskRow } from "../components/TaskRow.js"
+import type { Task } from "@memento/core";
+import { isTaskInInbox } from "@memento/core";
+import { TaskRow } from "../components/TaskRow.js";
 
 export function InboxView({ tasks }: { tasks: Task[] }) {
-  const inbox = tasks.filter(isTaskInInbox)
+  const inbox = tasks.filter(isTaskInInbox);
   return (
     <section>
       <h1 className="mb-1 text-3xl font-bold tracking-tight">Inbox</h1>
@@ -20,5 +20,5 @@ export function InboxView({ tasks }: { tasks: Task[] }) {
         </ul>
       )}
     </section>
-  )
+  );
 }

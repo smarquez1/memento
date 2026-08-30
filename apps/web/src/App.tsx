@@ -1,42 +1,42 @@
-import { useEffect, useRef, useState } from "react"
-import type { Task } from "@memento/core"
-import { DexieTaskAdapter } from "./adapters/dexie-task-adapter.js"
-import { BottomNav } from "./components/BottomNav.js"
-import { AddTaskButton } from "./components/AddTaskButton.js"
-import { TaskComposer } from "./components/TaskComposer.js"
-import { InboxView } from "./views/InboxView.js"
-import { TodayView } from "./views/TodayView.js"
-import { UpcomingView } from "./views/UpcomingView.js"
+import type { Task } from "@memento/core";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { DexieTaskAdapter } from "./adapters/dexie-task-adapter.js";
+import { AddTaskButton } from "./components/AddTaskButton.js";
+import { BottomNav } from "./components/BottomNav.js";
+import { TaskComposer } from "./components/TaskComposer.js";
+import { InboxView } from "./views/InboxView.js";
+import { TodayView } from "./views/TodayView.js";
+import { UpcomingView } from "./views/UpcomingView.js";
 
-const repository = new DexieTaskAdapter()
+const repository = new DexieTaskAdapter();
 
-export type ViewId = "inbox" | "today" | "upcoming"
+export type ViewId = "inbox" | "today" | "upcoming";
 
 export function App() {
-  const [view, setView] = useState<ViewId>("today")
-  const [tasks, setTasks] = useState<Task[]>([])
-  const [composerOpen, setComposerOpen] = useState(false)
-  const addButtonRef = useRef<HTMLButtonElement>(null)
-  const composerWasOpen = useRef(false)
+  const [view, setView] = useState<ViewId>("today");
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [composerOpen, setComposerOpen] = useState(false);
+  const addButtonRef = useRef<HTMLButtonElement>(null);
+  const composerWasOpen = useRef(false);
 
-  async function loadTasks() {
-    setTasks(await repository.list())
-  }
+  const loadTasks = useCallback(async () => {
+    setTasks(await repository.list());
+  }, []);
 
   useEffect(() => {
-    void loadTasks()
-  }, [])
+    void loadTasks();
+  }, [loadTasks]);
 
   useEffect(() => {
     if (!composerOpen && composerWasOpen.current) {
-      composerWasOpen.current = false
-      addButtonRef.current?.focus()
+      composerWasOpen.current = false;
+      addButtonRef.current?.focus();
     }
-  }, [composerOpen])
+  }, [composerOpen]);
 
   function openComposer() {
-    composerWasOpen.current = true
-    setComposerOpen(true)
+    composerWasOpen.current = true;
+    setComposerOpen(true);
   }
 
   return (
@@ -56,12 +56,12 @@ export function App() {
           <TaskComposer
             onClose={() => setComposerOpen(false)}
             onSave={async (task: Task) => {
-              await repository.put(task)
-              await loadTasks()
+              await repository.put(task);
+              await loadTasks();
             }}
           />
         )}
       </div>
     </div>
-  )
+  );
 }

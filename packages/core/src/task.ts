@@ -1,34 +1,34 @@
-export type TaskPriority = "none" | "low" | "medium" | "high"
+export type TaskPriority = "none" | "low" | "medium" | "high";
 
-export type TaskEffort = "none" | "low" | "medium" | "high"
+export type TaskEffort = "none" | "low" | "medium" | "high";
 
-export type TaskStatus = "active" | "completed"
+export type TaskStatus = "active" | "completed";
 
 export interface Task {
-  id: string
-  title: string
-  description: string
-  dueDate: string | null
-  priority: TaskPriority
-  effort: TaskEffort
-  status: TaskStatus
-  completedAt: string | null
-  createdAt: string
-  updatedAt: string
+  id: string;
+  title: string;
+  description: string;
+  dueDate: string | null;
+  priority: TaskPriority;
+  effort: TaskEffort;
+  status: TaskStatus;
+  completedAt: string | null;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface CreateTaskInput {
-  title: string
-  description?: string
-  dueDate?: string | null
-  priority?: TaskPriority
-  effort?: TaskEffort
+  title: string;
+  description?: string;
+  dueDate?: string | null;
+  priority?: TaskPriority;
+  effort?: TaskEffort;
 }
 
 export function createTask(input: CreateTaskInput, id: string, now: string): Task {
-  const title = input.title.trim()
+  const title = input.title.trim();
   if (!title) {
-    throw new Error("Task title is required")
+    throw new Error("Task title is required");
   }
 
   return {
@@ -42,7 +42,7 @@ export function createTask(input: CreateTaskInput, id: string, now: string): Tas
     completedAt: null,
     createdAt: now,
     updatedAt: now,
-  }
+  };
 }
 
 export function completeTask(task: Task, completedAt: string): Task {
@@ -51,7 +51,7 @@ export function completeTask(task: Task, completedAt: string): Task {
     status: "completed",
     completedAt,
     updatedAt: completedAt,
-  }
+  };
 }
 
 export function undoTask(task: Task, updatedAt: string): Task {
@@ -60,7 +60,7 @@ export function undoTask(task: Task, updatedAt: string): Task {
     status: "active",
     completedAt: null,
     updatedAt,
-  }
+  };
 }
 
 export function rescheduleTask(task: Task, dueDate: string | null, updatedAt: string): Task {
@@ -68,13 +68,13 @@ export function rescheduleTask(task: Task, dueDate: string | null, updatedAt: st
     ...task,
     dueDate,
     updatedAt,
-  }
+  };
 }
 
 export function isTaskDueOn(task: Task, date: string): boolean {
-  return task.dueDate === date
+  return task.dueDate === date;
 }
 
 export function isTaskInInbox(task: Task): boolean {
-  return task.status === "active" && task.dueDate === null
+  return task.status === "active" && task.dueDate === null;
 }
