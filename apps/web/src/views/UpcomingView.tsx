@@ -8,12 +8,12 @@ export function UpcomingView({ tasks }: { tasks: Task[] }) {
     .sort((a, b) => (a.dueDate ?? "").localeCompare(b.dueDate ?? ""));
   return (
     <section>
-      <h1 className="mb-1 text-3xl font-bold tracking-tight">Upcoming</h1>
-      <p className="mb-6 text-sm text-[#85858c]">
+      <h1 className="mb-1 font-bold text-3xl tracking-tight">Upcoming</h1>
+      <p className="mb-6 text-[#85858c] text-sm">
         {upcoming.length} {upcoming.length === 1 ? "task" : "tasks"} ahead
       </p>
       {upcoming.length === 0 ? (
-        <p className="text-sm text-[#85858c]">Nothing scheduled ahead.</p>
+        <p className="text-[#85858c] text-sm">Nothing scheduled ahead.</p>
       ) : (
         <ul className="list-none p-0">
           {upcoming.map((task) => (

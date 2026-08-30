@@ -42,7 +42,7 @@ export function App() {
   return (
     <div className="min-h-screen bg-[#101012] text-[#f4f1eb]">
       <div className="mx-auto w-full max-w-xl">
-        <main className="px-6 pb-40 pt-8">
+        <main className="px-6 pt-8 pb-40">
           {view === "inbox" && <InboxView tasks={tasks} />}
           {view === "today" && <TodayView tasks={tasks} />}
           {view === "upcoming" && <UpcomingView tasks={tasks} />}

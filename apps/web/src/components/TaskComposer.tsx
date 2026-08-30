@@ -77,13 +77,13 @@ export function TaskComposer({ onClose, onSave }: TaskComposerProps) {
         role="dialog"
         aria-modal="true"
         aria-label="New task"
-        className="fixed inset-x-0 bottom-0 z-50 mx-auto w-full max-w-xl rounded-t-2xl border-t border-[#303037] bg-[#19191d] p-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))]"
+        className="fixed inset-x-0 bottom-0 z-50 mx-auto w-full max-w-xl rounded-t-2xl border-[#303037] border-t bg-[#19191d] p-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))]"
       >
         <form onSubmit={handleSubmit} noValidate>
-          <h2 className="mb-4 text-lg font-semibold text-[#f4f1eb]">New task</h2>
+          <h2 className="mb-4 font-semibold text-[#f4f1eb] text-lg">New task</h2>
 
           <div className="mb-4">
-            <label htmlFor="composer-title" className="mb-1 block text-xs text-[#85858c]">
+            <label htmlFor="composer-title" className="mb-1 block text-[#85858c] text-xs">
               Title
             </label>
             <input
@@ -96,7 +96,7 @@ export function TaskComposer({ onClose, onSave }: TaskComposerProps) {
           </div>
 
           <div className="mb-4">
-            <label htmlFor="composer-description" className="mb-1 block text-xs text-[#85858c]">
+            <label htmlFor="composer-description" className="mb-1 block text-[#85858c] text-xs">
               Description
             </label>
             <textarea
@@ -109,7 +109,7 @@ export function TaskComposer({ onClose, onSave }: TaskComposerProps) {
           </div>
 
           <div className="mb-4">
-            <label htmlFor="composer-when" className="mb-1 block text-xs text-[#85858c]">
+            <label htmlFor="composer-when" className="mb-1 block text-[#85858c] text-xs">
               When
             </label>
             <input
@@ -123,7 +123,7 @@ export function TaskComposer({ onClose, onSave }: TaskComposerProps) {
 
           <div className="mb-4 grid grid-cols-2 gap-3">
             <div>
-              <label htmlFor="composer-priority" className="mb-1 block text-xs text-[#85858c]">
+              <label htmlFor="composer-priority" className="mb-1 block text-[#85858c] text-xs">
                 Priority
               </label>
               <select
@@ -139,7 +139,7 @@ export function TaskComposer({ onClose, onSave }: TaskComposerProps) {
               </select>
             </div>
             <div>
-              <label htmlFor="composer-effort" className="mb-1 block text-xs text-[#85858c]">
+              <label htmlFor="composer-effort" className="mb-1 block text-[#85858c] text-xs">
                 Effort
               </label>
               <select
@@ -157,7 +157,7 @@ export function TaskComposer({ onClose, onSave }: TaskComposerProps) {
           </div>
 
           {error && (
-            <p role="alert" className="mb-4 text-sm text-red-300">
+            <p role="alert" className="mb-4 text-red-300 text-sm">
               {error}
             </p>
           )}

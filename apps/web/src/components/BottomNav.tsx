@@ -15,7 +15,7 @@ export function BottomNav({ view, onSelect }: BottomNavProps) {
   return (
     <nav
       aria-label="Primary"
-      className="fixed inset-x-0 bottom-0 z-20 border-t border-[#303037] bg-[#101012]/95 backdrop-blur supports-[backdrop-filter]:bg-[#101012]/85"
+      className="fixed inset-x-0 bottom-0 z-20 border-[#303037] border-t bg-[#101012]/95 backdrop-blur supports-[backdrop-filter]:bg-[#101012]/85"
     >
       <div className="mx-auto flex w-full max-w-xl items-stretch justify-around pb-[env(safe-area-inset-bottom)]">
         {views.map((item) => {

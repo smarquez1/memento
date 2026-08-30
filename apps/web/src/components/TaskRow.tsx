@@ -2,7 +2,7 @@ import type { Task } from "@memento/core";
 
 export function TaskRow({ task }: { task: Task }) {
   return (
-    <li className="flex min-h-16 items-center gap-3 border-b border-[#303037] py-3">
+    <li className="flex min-h-16 items-center gap-3 border-[#303037] border-b py-3">
       <span
         aria-hidden="true"
         className={`flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded-full border-2 text-xs ${
@@ -20,7 +20,7 @@ export function TaskRow({ task }: { task: Task }) {
           {task.title}
         </p>
         {(task.dueDate || task.description) && (
-          <p className="mt-0.5 truncate text-xs text-[#85858c]">
+          <p className="mt-0.5 truncate text-[#85858c] text-xs">
             {[task.dueDate, task.description].filter(Boolean).join("  ·  ")}
           </p>
         )}

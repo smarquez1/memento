@@ -10,7 +10,7 @@ export function AddTaskButton({ ref, onClick }: AddTaskButtonProps) {
       type="button"
       aria-label="Add task"
       onClick={onClick}
-      className="fixed bottom-[calc(5rem+env(safe-area-inset-bottom))] right-6 z-30 flex h-16 w-16 items-center justify-center rounded-full bg-[#f4f1eb] text-3xl font-light text-[#101012] shadow-lg shadow-black/40"
+      className="fixed right-6 bottom-[calc(5rem+env(safe-area-inset-bottom))] z-30 flex h-16 w-16 items-center justify-center rounded-full bg-[#f4f1eb] font-light text-3xl text-[#101012] shadow-black/40 shadow-lg"
     >
       <span aria-hidden="true">+</span>
     </button>
