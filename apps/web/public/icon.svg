@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <title>Memento</title>
+  <rect width="512" height="512" rx="112" fill="#101012"/>
+  <text x="256" y="256" text-anchor="middle" dominant-baseline="central" font-family="Inter, Helvetica, Arial, sans-serif" font-size="260" font-weight="600" fill="#f4f1eb">M</text>
+</svg>
