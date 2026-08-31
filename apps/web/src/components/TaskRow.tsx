@@ -1,18 +1,31 @@
 import type { Task } from "@memento/core";
 
-export function TaskRow({ task }: { task: Task }) {
+interface TaskRowProps {
+  task: Task;
+  onToggle: (task: Task) => void;
+}
+
+export function TaskRow({ task, onToggle }: TaskRowProps) {
   return (
     <li className="flex min-h-16 items-center gap-3 border-[#303037] border-b py-3">
-      <span
-        aria-hidden="true"
-        className={`flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded-full border-2 text-xs ${
-          task.status === "completed"
-            ? "border-[#f4f1eb] bg-[#f4f1eb] text-[#101012]"
-            : "border-[#303037]"
-        }`}
+      <button
+        type="button"
+        aria-label={task.status === "completed" ? `Undo ${task.title}` : `Complete ${task.title}`}
+        aria-pressed={task.status === "completed"}
+        onClick={() => onToggle(task)}
+        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-xs focus-visible:outline-2 focus-visible:outline-[#f4f1eb] focus-visible:outline-offset-2"
       >
-        {task.status === "completed" ? "✓" : ""}
-      </span>
+        <span
+          aria-hidden="true"
+          className={`flex h-[22px] w-[22px] items-center justify-center rounded-full border-2 text-xs ${
+            task.status === "completed"
+              ? "border-[#f4f1eb] bg-[#f4f1eb] text-[#101012]"
+              : "border-[#303037]"
+          }`}
+        >
+          {task.status === "completed" ? "✓" : ""}
+        </span>
+      </button>
       <div className="min-w-0 flex-1">
         <p
           className={`truncate text-sm ${task.status === "completed" ? "text-[#85858c] line-through" : "text-[#f4f1eb]"}`}

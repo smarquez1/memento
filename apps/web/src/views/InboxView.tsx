@@ -2,7 +2,7 @@ import type { Task } from "@memento/core";
 import { isTaskInInbox } from "@memento/core";
 import { TaskRow } from "../components/TaskRow.js";
 
-export function InboxView({ tasks }: { tasks: Task[] }) {
+export function InboxView({ tasks, onToggle }: { tasks: Task[]; onToggle: (task: Task) => void }) {
   const inbox = tasks.filter(isTaskInInbox);
   return (
     <section>
@@ -15,7 +15,7 @@ export function InboxView({ tasks }: { tasks: Task[] }) {
       ) : (
         <ul className="list-none p-0">
           {inbox.map((task) => (
-            <TaskRow key={task.id} task={task} />
+            <TaskRow key={task.id} task={task} onToggle={onToggle} />
           ))}
         </ul>
       )}

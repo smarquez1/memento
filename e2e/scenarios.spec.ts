@@ -90,4 +90,24 @@ test.describe("task view scenarios", () => {
     await nav.getByRole("button", { name: "Inbox" }).click();
     await expect(page.getByText("Remember this")).toBeVisible();
   });
+
+  test("completes, undoes, and lists a task in Done today", async ({ page }) => {
+    await page.clock.setFixedTime(new Date(NOW));
+    await page.goto("/");
+    await resetIndexedDB(page);
+    await seedTasks(page, [task("complete", "Finish this", TODAY)]);
+    await page.reload();
+
+    const completeButton = page.getByRole("button", { name: "Complete Finish this" });
+    await completeButton.click();
+    await expect(page.getByRole("button", { name: "Undo Finish this" })).toBeVisible();
+    await expect(page.getByText("Done today (1)")).toBeVisible();
+
+    await page.getByText("Done today (1)").click();
+    await expect(page.getByText("Finish this")).toHaveCount(2);
+
+    await page.getByRole("button", { name: "Undo Finish this" }).first().click();
+    await expect(page.getByRole("button", { name: "Complete Finish this" })).toBeVisible();
+    await expect(page.getByText("Done today (0)")).toBeVisible();
+  });
 });

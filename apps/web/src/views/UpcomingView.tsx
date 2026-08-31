@@ -1,7 +1,13 @@
 import type { Task } from "@memento/core";
 import { TaskRow } from "../components/TaskRow.js";
 
-export function UpcomingView({ tasks }: { tasks: Task[] }) {
+export function UpcomingView({
+  tasks,
+  onToggle,
+}: {
+  tasks: Task[];
+  onToggle: (task: Task) => void;
+}) {
   const today = new Date().toISOString().slice(0, 10);
   const upcoming = tasks
     .filter((task) => task.dueDate !== null && task.dueDate > today)
@@ -17,7 +23,7 @@ export function UpcomingView({ tasks }: { tasks: Task[] }) {
       ) : (
         <ul className="list-none p-0">
           {upcoming.map((task) => (
-            <TaskRow key={task.id} task={task} />
+            <TaskRow key={task.id} task={task} onToggle={onToggle} />
           ))}
         </ul>
       )}

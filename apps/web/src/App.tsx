@@ -1,4 +1,4 @@
-import type { Task } from "@memento/core";
+import { completeTask, type Task, undoTask } from "@memento/core";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { DexieTaskAdapter } from "./adapters/dexie-task-adapter.js";
 import { AddTaskButton } from "./components/AddTaskButton.js";
@@ -39,13 +39,21 @@ export function App() {
     setComposerOpen(true);
   }
 
+  async function toggleTask(task: Task) {
+    const timestamp = new Date().toISOString();
+    await repository.put(
+      task.status === "completed" ? undoTask(task, timestamp) : completeTask(task, timestamp),
+    );
+    await loadTasks();
+  }
+
   return (
     <div className="min-h-screen bg-[#101012] text-[#f4f1eb]">
       <div className="mx-auto w-full max-w-xl">
         <main className="px-6 pt-8 pb-40">
-          {view === "inbox" && <InboxView tasks={tasks} />}
-          {view === "today" && <TodayView tasks={tasks} />}
-          {view === "upcoming" && <UpcomingView tasks={tasks} />}
+          {view === "inbox" && <InboxView tasks={tasks} onToggle={toggleTask} />}
+          {view === "today" && <TodayView tasks={tasks} onToggle={toggleTask} />}
+          {view === "upcoming" && <UpcomingView tasks={tasks} onToggle={toggleTask} />}
         </main>
 
         <AddTaskButton ref={addButtonRef} onClick={openComposer} />
