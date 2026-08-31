@@ -1,13 +1,22 @@
 import type { Task } from "@memento/core";
+import { useState } from "react";
 
 interface TaskRowProps {
   task: Task;
   onToggle: (task: Task) => void;
+  onDelete: (task: Task) => void;
 }
 
-export function TaskRow({ task, onToggle }: TaskRowProps) {
+export function TaskRow({ task, onToggle, onDelete }: TaskRowProps) {
+  const [confirmingDelete, setConfirmingDelete] = useState(false);
+
+  async function confirmDelete() {
+    setConfirmingDelete(false);
+    await onDelete(task);
+  }
+
   return (
-    <li className="flex min-h-16 items-center gap-3 border-[#303037] border-b py-3">
+    <li className="relative flex min-h-16 items-center gap-3 border-[#303037] border-b py-3">
       <button
         type="button"
         aria-label={task.status === "completed" ? `Undo ${task.title}` : `Complete ${task.title}`}
@@ -38,6 +47,43 @@ export function TaskRow({ task, onToggle }: TaskRowProps) {
           </p>
         )}
       </div>
+      <button
+        type="button"
+        aria-label={`Delete ${task.title}`}
+        onClick={() => setConfirmingDelete(true)}
+        className="flex h-11 w-11 shrink-0 items-center justify-center rounded text-[#85858c] text-lg focus-visible:outline-2 focus-visible:outline-[#f4f1eb] focus-visible:outline-offset-2"
+      >
+        <span aria-hidden="true">×</span>
+      </button>
+      {confirmingDelete && (
+        <div
+          role="alertdialog"
+          aria-modal="true"
+          aria-labelledby={`delete-title-${task.id}`}
+          className="absolute inset-x-0 z-10 rounded-lg border border-[#303037] bg-[#18181b] p-4 shadow-xl"
+        >
+          <h2 id={`delete-title-${task.id}`} className="font-semibold text-sm">
+            Delete task?
+          </h2>
+          <p className="mt-1 text-[#85858c] text-sm">Delete “{task.title}”?</p>
+          <div className="mt-4 flex justify-end gap-2">
+            <button
+              type="button"
+              onClick={() => setConfirmingDelete(false)}
+              className="min-h-11 rounded px-4 text-[#85858c] text-sm focus-visible:outline-2 focus-visible:outline-[#f4f1eb]"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              onClick={() => void confirmDelete()}
+              className="min-h-11 rounded bg-[#f4f1eb] px-4 font-medium text-[#101012] text-sm focus-visible:outline-2 focus-visible:outline-[#f4f1eb] focus-visible:outline-offset-2"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      )}
     </li>
   );
 }

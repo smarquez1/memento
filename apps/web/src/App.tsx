@@ -47,13 +47,24 @@ export function App() {
     await loadTasks();
   }
 
+  async function deleteTask(task: Task) {
+    await repository.remove(task.id);
+    await loadTasks();
+  }
+
   return (
     <div className="min-h-screen bg-[#101012] text-[#f4f1eb]">
       <div className="mx-auto w-full max-w-xl">
         <main className="px-6 pt-8 pb-40">
-          {view === "inbox" && <InboxView tasks={tasks} onToggle={toggleTask} />}
-          {view === "today" && <TodayView tasks={tasks} onToggle={toggleTask} />}
-          {view === "upcoming" && <UpcomingView tasks={tasks} onToggle={toggleTask} />}
+          {view === "inbox" && (
+            <InboxView tasks={tasks} onToggle={toggleTask} onDelete={deleteTask} />
+          )}
+          {view === "today" && (
+            <TodayView tasks={tasks} onToggle={toggleTask} onDelete={deleteTask} />
+          )}
+          {view === "upcoming" && (
+            <UpcomingView tasks={tasks} onToggle={toggleTask} onDelete={deleteTask} />
+          )}
         </main>
 
         <AddTaskButton ref={addButtonRef} onClick={openComposer} />

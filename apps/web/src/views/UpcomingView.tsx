@@ -4,9 +4,11 @@ import { TaskRow } from "../components/TaskRow.js";
 export function UpcomingView({
   tasks,
   onToggle,
+  onDelete,
 }: {
   tasks: Task[];
   onToggle: (task: Task) => void;
+  onDelete: (task: Task) => void;
 }) {
   const today = new Date().toISOString().slice(0, 10);
   const upcoming = tasks
@@ -23,7 +25,7 @@ export function UpcomingView({
       ) : (
         <ul className="list-none p-0">
           {upcoming.map((task) => (
-            <TaskRow key={task.id} task={task} onToggle={onToggle} />
+            <TaskRow key={task.id} task={task} onToggle={onToggle} onDelete={onDelete} />
           ))}
         </ul>
       )}

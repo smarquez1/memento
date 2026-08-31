@@ -2,7 +2,15 @@ import type { Task } from "@memento/core";
 import { isTaskDueOn } from "@memento/core";
 import { TaskRow } from "../components/TaskRow.js";
 
-export function TodayView({ tasks, onToggle }: { tasks: Task[]; onToggle: (task: Task) => void }) {
+export function TodayView({
+  tasks,
+  onToggle,
+  onDelete,
+}: {
+  tasks: Task[];
+  onToggle: (task: Task) => void;
+  onDelete: (task: Task) => void;
+}) {
   const today = new Date().toISOString().slice(0, 10);
   const todayTasks = tasks.filter((task) => isTaskDueOn(task, today));
   const completedToday = tasks.filter(
@@ -17,7 +25,7 @@ export function TodayView({ tasks, onToggle }: { tasks: Task[]; onToggle: (task:
       ) : (
         <ul className="list-none p-0">
           {todayTasks.map((task) => (
-            <TaskRow key={task.id} task={task} onToggle={onToggle} />
+            <TaskRow key={task.id} task={task} onToggle={onToggle} onDelete={onDelete} />
           ))}
         </ul>
       )}
@@ -31,7 +39,7 @@ export function TodayView({ tasks, onToggle }: { tasks: Task[]; onToggle: (task:
           ) : (
             <ul className="list-none p-0">
               {completedToday.map((task) => (
-                <TaskRow key={task.id} task={task} onToggle={onToggle} />
+                <TaskRow key={task.id} task={task} onToggle={onToggle} onDelete={onDelete} />
               ))}
             </ul>
           )}

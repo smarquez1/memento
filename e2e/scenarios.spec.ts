@@ -110,4 +110,26 @@ test.describe("task view scenarios", () => {
     await expect(page.getByRole("button", { name: "Complete Finish this" })).toBeVisible();
     await expect(page.getByText("Done today (0)")).toBeVisible();
   });
+
+  test("confirms task deletion and keeps the task when cancelled", async ({ page }) => {
+    await page.clock.setFixedTime(new Date(NOW));
+    await page.goto("/");
+    await resetIndexedDB(page);
+    await seedTasks(page, [task("delete", "Remove this", null)]);
+    await page.reload();
+    await page.getByRole("button", { name: "Inbox" }).click();
+
+    await page.getByRole("button", { name: "Delete Remove this" }).click();
+    const dialog = page.getByRole("alertdialog", { name: "Delete task?" });
+    await expect(dialog).toContainText("Remove this");
+    await dialog.getByRole("button", { name: "Cancel" }).click();
+    await expect(page.getByText("Remove this")).toBeVisible();
+
+    await page.getByRole("button", { name: "Delete Remove this" }).click();
+    await page
+      .getByRole("alertdialog", { name: "Delete task?" })
+      .getByRole("button", { name: "Delete" })
+      .click();
+    await expect(page.getByText("Remove this")).toBeHidden();
+  });
 });
