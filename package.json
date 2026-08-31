@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "packageManager": "pnpm@10.26.2",
   "scripts": {
+    "audit": "pnpm audit --audit-level=high",
     "build": "pnpm --recursive build",
     "dev": "pnpm --filter @memento/web dev",
     "format": "biome format --write .",
