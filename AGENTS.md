@@ -16,7 +16,7 @@ theme unless an issue changes the scope.
 - `packages/core`: framework-independent task types and domain rules.
 - `e2e`: Playwright scenarios for mobile browser behavior.
 - `docs/plan.md`: product scope, architecture direction, and deferred phases.
-- `.opencode/skills`: reusable instructions for AI-assisted work in this repo.
+- `.agents/skills`: reusable instructions for AI-assisted work in this repo.
 
 ## Architecture Rules
 
