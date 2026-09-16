@@ -6,3 +6,7 @@ test-results/
 .DS_Store
 *.local
 *.tsbuildinfo
+
+# Design tools
+# OpenCode config may contain secrets (API keys, tokens); keep it local.
+opencode.json
