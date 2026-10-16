@@ -23,7 +23,7 @@
     "@types/react-dom": "^19.2.2",
     "fake-indexeddb": "^6.2.5",
     "tailwindcss": "^4.3.0",
-    "typescript": "^5.9.3",
+    "typescript": "^7.0.2",
     "vite": "^7.1.7",
     "vite-plugin-pwa": "^1.2.0",
     "vitest": "^4.1.11"
